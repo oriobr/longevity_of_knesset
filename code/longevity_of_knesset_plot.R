@@ -26,7 +26,7 @@ register_variant(
 
 
 
-k_wab <-   XML::htmlParse("row data/HTML/knesset/knesset.html")
+k_wab <-   XML::htmlParse("row_data/knesset/knesset.html")
  
 # Extract the election dates -------------
 
@@ -124,7 +124,7 @@ ggplot(data = df1) +
 
 
 file_name <- 
-  paste0("export_fig/","knesset_english.png")
+  paste0("plot/","knesset_english.png")
 
 ggsave(file_name,plot = last_plot(),device = ragg::agg_png,width = 12,height = 10,bg = "white",)
 
@@ -167,7 +167,7 @@ ggplot(data = df1) +
 
 
 file_name <- 
-  paste0("export_fig/","knesset_hebrew.png")
+  paste0("plot/","knesset_hebrew.png")
 
 ggsave(file_name,plot = last_plot(),device = ragg::agg_png,width = 12,height = 10,bg = "white",)
 
