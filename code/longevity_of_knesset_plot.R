@@ -21,37 +21,35 @@ register_variant(
   weight = "medium"
 )
 
+
 # Read the data from the HTML of the Knesset website -----------------
 #> Download the website below and save it in HTML format
 #> https://main.knesset.gov.il/About/History/Pages/Lobby.aspx
 
-
-
 k_wab <- XML::htmlParse("row_data/knesset/knesset.html")
+
 
 # Extract the election dates -------------
 
-
 elections <- xpathSApply(k_wab, path = '//*[@data-bind="text: ElectionDate"]', getChildrenStrings)
+
 
 # Change to date format --------
 
 elections %<>% str_extract_all("\\d+", simplify = TRUE)
 
-
 elections_date <- paste(elections[, 3], elections[, 2], elections[, 1], sep = "-")
+
 
 # as data.table ---------
 
 df1 <- data.table(elections_date)
-
 
 df1[, elections_date := as.IDate(elections_date)]
 
 # add vars ---------
 
 setorder(df1, elections_date)
-
 
 df1[, knesset := 1:.N]
 
@@ -84,7 +82,6 @@ k_lm <- lm(knesset ~ start, df1[knesset < 21])
 
 d_end <- (25 - k_lm$coefficients[1]) / k_lm$coefficients[2]
 
-
 k_25_expc <- as.IDate(d_end + k_lm$coefficients[1])
 
 # add to years seq--------
@@ -93,6 +90,7 @@ years_seq_2 <- c(years_seq, k_25_expc)
 
 
 # Tools for graphs ----
+
 smooth_seq <- seq(min(df1$start), k_25_expc, length.out = 80)
 
 smooth_seq <- as.numeric(smooth_seq)
@@ -122,7 +120,7 @@ ggplot(data = df1) +
   ) +
   scale_x_date(breaks = years_seq_2, date_labels = "%Y", date_minor_breaks = "year") +
   scale_y_continuous(breaks = 1:25) +
-  xlab("date") +
+  xlab("") +
   theme_pubclean(base_size = 16, base_family = "Heebo-Medium")
 
 
