@@ -73,10 +73,8 @@ df1[, avr_end := as.IDate(start + k_len)]
 
 
 # Calculation of the years of the country's place until today in a sequence of five years --
-#
+
 years_seq <- seq.Date(from = as.Date("1948-01-01"), to = as.Date("2023-01-01"), "5 years")
-
-
 
 
 # Calculation of the expected year for the 25th Knesset according to the average----
